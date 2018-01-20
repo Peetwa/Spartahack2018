@@ -116,15 +116,6 @@ Array.prototype.remove = function(item) {
     this.splice(index, 1);
     return this;
 };
-
-function count(arr) {
-    var counts = {};
-    for (var i = 0; i < arr.length; i++) {
-        var num = arr[i];
-        counts[num] = counts[num] ? counts[num] + 1 : 1;
-    }
-    return counts
-}
 var app = new Vue({
     el: '#app',
     mounted: function() {
@@ -206,12 +197,6 @@ var app = new Vue({
         map: map
     },
     computed: {
-        fixedIn: function() {
-            return count(this.in)
-        },
-        fixedOut: function() {
-            return count(this.out)
-        },
         currentIn: function() {
             return diff(this.out, this.in)
         }
