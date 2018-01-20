@@ -9,15 +9,21 @@
  */
 "use strict";
 
-const app = require( "express" )();
+
+const express = require('express');
+const parser = require('body-parser');
+const router = require('./api');
+
+const app = express();
 const http = require( "http" ).Server( app );
 let io = require('socket.io')(http);
 
-const PORT = 3000;
+require('./database');
+app.use(parser.json());
+app.use('/', router);
 
-app.get( "/", function( req, res ) {
-    res.send( "<h1>Hello world</h1>" );
-} );
+
+const PORT = 3000;
 
 io.on('connection', function(socket){
     console.log('a user connected');
