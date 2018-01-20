@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>MedAural</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
+    <!-- Link to your stylesheet here -->
+    <script src="vue.js"></script>
+    <script src="moment.min.js"></script>
+    <link rel="stylesheet" href="aj.min.css">
+</head>
+
+<body class="bg-white">
+    <div class="" id="app">
+        <div class="row cf">
+            <div class="six columns bg-blue white p4 min-vh-100">
+                <h3 class="mb4">Patient: <b>Arham Jain</b></h3>
+                <div class="row cf mb0">
+                    <div class="six columns">
+                        <h5>DOB: 11/25/2000</h5>
+                        <h5>Allergies</h5>
+                        <ul>
+                            <li>None</li>
+                        </ul>
+                    </div>
+                    <div class="six columns">
+                        <h5>Surgeon: <b>Dr. Shah</b></h5>
+                        <h5>Procedure: <b>Appendectomy</b></h5>
+                    </div>
+                </div>
+                <div class="row cf">
+                    <div class="six columns">
+                        <div class="ba br3 bw2 p1 tc bg-white blue">
+                            <h4 class="mb1">Heart Rate</h4>
+                            <h5 class="m0"><b>{{bpm}} </b>bpm</h5>
+                            <div id="bpm"></div>
+                        </div>
+                    </div>
+                    <div class="six columns">
+                        <div class="ba br3 bw2 p1 tc">
+                            <h3>Blood Pressure</h3>
+                            <h5><b class="tracked">120/75 </b>mmHg</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cf mt2">
+                    <div class="six columns mv1">
+                        <div class="ba br3 bw2 p1 tc bg-white blue">
+                            <h4 class="mb1">Temperature</h4>
+                            <h5 class="m0"><b>{{temp}} </b>F</h5>
+                            <div id="temp"></div>
+                        </div>
+                    </div>
+                    <div class="six columns mv1">
+                        <div class="ba br3 bw2 p1 tc bg-white blue">
+                            <h4 class="mb1">Oxygen</h4>
+                            <h5 class="m0"><b>{{oxygen}} </b>%</h5>
+                            <div id="oxygen"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row cf mt1">
+                    <div class="six columns mv1 b">
+                        <h3>Start Time</h3>{{start.format('MMMM Do YYYY, h:mm')}}
+                    </div>
+                    <div class="six columns mv1 b">
+                        <h3>Elapsed</h3>{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes
+                    </div>
+                </div>
+            </div>
+            <div class="six columns p4">
+                <h3 class="b mb4">Record</h3>
+                <!--<div class="row cf mt5">
+                    <div class="six columns mv2">
+                        <div class="ba p3 tc">
+                            <h3>In</h3>
+                            <h5 v-for="(value, key) in fixedIn"><b>{{key}} </b>x{{value}}</h5>
+                        </div>
+                    </div>
+                    <div class="six columns mv2">
+                        <div class="ba p3 tc">
+                            <h3>Out</h3>
+                            <h5 v-for="(value, key) in fixedOut"><b>{{key}} </b>x{{value}}</h5>
+                        </div>
+                    </div>
+                </div>-->
+                <br>
+                <div class="f5">
+                    <div v-for="item in currentIn" class="dib mr3 bg-yellow white p1">{{item}} </div>
+                    <div v-for="item in out" class="dib mr3">{{item}} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+function diff(a1, a2) {
+    a2c = JSON.parse(JSON.stringify(a2))
+    for (var i = a1.length - 1; i >= 0; i--) {
+        a2c = a2c.remove(a1[i])
+    }
+    return a2c;
+}
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+Array.prototype.remove = function(item) {
+    var index = this.indexOf(item);
+    this.splice(index, 1);
+    return this;
+};
+
+function count(arr) {
+    var counts = {};
+    for (var i = 0; i < arr.length; i++) {
+        var num = arr[i];
+        counts[num] = counts[num] ? counts[num] + 1 : 1;
+    }
+    return counts
+}
+var app = new Vue({
+    el: '#app',
+    mounted: function() {
+        var temp = new Chart({
+            parent: "#temp", // or a DOM element
+            data: {
+                labels: ["-5", "-4", "-3", "-2", "-1", "0"],
+                datasets: [{
+                    title: "Temperature",
+                    values: [this.temp, this.temp, this.temp, this.temp, this.temp, this.temp]
+                }]
+            },
+            type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
+            height: 100,
+            colors: ['#2f97de'],
+
+        });
+        var oxygen = new Chart({
+            parent: "#oxygen", // or a DOM element
+            data: {
+                labels: ["-5", "-4", "-3", "-2", "-1", "0"],
+                datasets: [{
+                    title: "Oxygen",
+                    values: [this.oxygen, this.oxygen, this.oxygen, this.oxygen, this.oxygen, this.oxygen]
+                }]
+            },
+            type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
+            height: 100,
+            colors: ['#2f97de'],
+        });
+        var bpm = new Chart({
+            parent: "#bpm", // or a DOM element
+            data: {
+                labels: ["-5", "-4", "-3", "-2", "-1", "0"],
+                datasets: [{
+                    title: "Heart Rate",
+                    values: [this.bpm, this.bpm, this.bpm, this.bpm, this.bpm, this.bpm]
+                }]
+            },
+            type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
+            height: 100,
+            colors: ['#2f97de'],
+        });
+        window.setInterval(function() {
+            app.oxygen = Math.round(10 * random(app.oxygen - .2, app.oxygen + .2)) / 10;
+            if (app.oxygen > 100) app.oxygen = 100
+            newData = oxygen.data.datasets[0].values;
+            newData.splice(0, 1)
+            newData.push(app.oxygen)
+            oxygen.update_values(
+                [{ values: newData }],
+            );
+            app.temp = Math.round(10 * random(app.temp - .1, app.temp + .2)) / 10;
+            if (app.temp > 108) app.oxygen = 108
+            newData = temp.data.datasets[0].values;
+            newData.splice(0, 1)
+            newData.push(app.temp)
+            temp.update_values(
+                [{ values: newData }],
+            );
+            app.bpm = Math.round(random(app.bpm - 1, app.bpm + 2));
+            if (app.bpm > 108) app.bpm = 108
+            newData = bpm.data.datasets[0].values;
+            newData.splice(0, 1)
+            newData.push(app.bpm)
+            bpm.update_values(
+                [{ values: newData }],
+            );
+        }, 2000);
+    },
+    data: { in: ["Scalpel", "Scalpel", "Something"],
+        out: ["Scalpel"],
+        diff: diff,
+        temp: 98.6,
+        oxygen: 98,
+        bpm: 75,
+        start: moment(),
+        moment: moment
+    },
+    computed: {
+        fixedIn: function() {
+            return count(this.in)
+        },
+        fixedOut: function() {
+            return count(this.out)
+        },
+        currentIn: function() {
+            return diff(this.out, this.in)
+        }
+    }
+})
+</script>
+
+</html>
