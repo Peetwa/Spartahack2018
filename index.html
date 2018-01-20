@@ -15,13 +15,13 @@
     <script src="moment.min.js"></script>
     <link rel="stylesheet" href="aj.min.css">
     <script>
-        var map = {
-            clamp: "flaticon-clamp-1",
-            spreader: "flaticon-clamp",
-            towel: "flaticon-wipes",
-            scissors: "flaticon-scissors",
-            scalpel: "flaticon-scalpel"
-        }
+    var map = {
+        clamp: "flaticon-clamp-1",
+        spreader: "flaticon-clamp",
+        towel: "flaticon-wipes",
+        scissors: "flaticon-scissors",
+        scalpel: "flaticon-scalpel"
+    }
     </script>
 </head>
 
@@ -81,7 +81,8 @@
                 </div>
             </div>
             <div class="six columns p4">
-                <h3 class="b mb4">Record</h3> <p class="f5">
+                <h3 class="b mb4">Record</h3>
+                <p class="f5">
                     <span class="white-3">gray</span> means used, and <span class="red">red</span> means still in the body
                 </p>
                 <br>
@@ -98,7 +99,13 @@
     </script>
 </body>
 <script>
-var socket = io();
+var io = io();
+io.on('connection', function(socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+});
 
 function diff(a1, a2) {
     a2c = JSON.parse(JSON.stringify(a2))
@@ -116,6 +123,7 @@ Array.prototype.remove = function(item) {
     this.splice(index, 1);
     return this;
 };
+
 var app = new Vue({
     el: '#app',
     mounted: function() {
@@ -186,7 +194,7 @@ var app = new Vue({
             );
         }, 2000);
     },
-    data: { in: ["Scalpel", "Scalpel", "Clamp", "Clamp", "Towel","Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Spreader"],
+    data: { in: ["Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Spreader"],
         out: ["Scalpel", "Towel", "Spreader"],
         diff: diff,
         temp: 98.6,
