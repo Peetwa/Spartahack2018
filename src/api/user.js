@@ -18,12 +18,12 @@ module.exports = function( router, User ) {
      * @return:
      */
     router.post('/user/', function(req, res){
-        const user = req.body.user;
+        const user = req.body;
         User.create(user, {new: true}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to create the patient`});
             }
-            res.status(200).json({'user': user, message: `Successfully created the patient`});
+            return res.status(200).json({'user': user, message: `Successfully created the patient`});
         });
     });
 };

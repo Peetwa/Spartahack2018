@@ -15,6 +15,8 @@ let router = express.Router();
 const User = require('../models/user.js');
 
 require( "./tools" )( router, User );
+require( "./user" )( router, User );
+
 
 
 module.exports = router;

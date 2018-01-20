@@ -12,7 +12,7 @@
 
 const express = require('express');
 const parser = require('body-parser');
-const router = require('./api');
+const router = require('./api/index');
 
 const app = express();
 const http = require( "http" ).Server( app );
