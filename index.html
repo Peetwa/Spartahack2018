@@ -18,8 +18,8 @@
 <body class="bg-white">
     <div class="" id="app">
         <div class="row cf">
-            <div class="six columns bg-blue white p4">
-                <h3 class="mb4">Patient: <b>Arham Jain</b></h3>
+            <div class="six columns bg-blue white p4 min-vh-100">
+                <h3 class="mb4"><b>Arham Jain</b></h3>
                 <div class="row cf mb0">
                     <div class="six columns">
                         <h5>DOB: 11/25/2000</h5>
@@ -65,31 +65,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="row cf mt1">
+                <div class="row cf mt3">
                     <div class="six columns b">
-                        <h3>Start Time</h3>{{start.format('MMMM Do YYYY, h:mm')}}
+                        <h4 class="b tracked mb1 ttu">Start Time</h4>
+                        <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
                     </div>
                     <div class="six columns b">
-                        <h3>Elapsed</h3>{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes
+                        <h4 class="b tracked mb1 ttu">Elapsed</h4>
+                        <div class="f6">{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes</div>
                     </div>
                 </div>
             </div>
             <div class="six columns p4">
                 <h3 class="b mb4">Record</h3>
-                <!--<div class="row cf mt5">
-                    <div class="six columns mv2">
-                        <div class="ba p3 tc">
-                            <h3>In</h3>
-                            <h5 v-for="(value, key) in fixedIn"><b>{{key}} </b>x{{value}}</h5>
-                        </div>
-                    </div>
-                    <div class="six columns mv2">
-                        <div class="ba p3 tc">
-                            <h3>Out</h3>
-                            <h5 v-for="(value, key) in fixedOut"><b>{{key}} </b>x{{value}}</h5>
-                        </div>
-                    </div>
-                </div>-->
                 <br>
                 <div class="f5">
                     <div v-for="item in currentIn" class="dib mr3 bg-yellow white p1">{{item}} </div>
@@ -100,7 +88,7 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io();
+    var socket = io();
     </script>
 </body>
 <script>
@@ -183,7 +171,7 @@ var app = new Vue({
             oxygen.update_values(
                 [{ values: newData }],
             );
-            app.temp = Math.round(10 * random(app.temp - .1, app.temp + .2)) / 10;
+            app.temp = Math.round(10 * random(app.temp - .2, app.temp + .2)) / 10;
             if (app.temp > 108) app.temp = 108
             newData = temp.data.datasets[0].values;
             newData.splice(0, 1)
@@ -191,7 +179,7 @@ var app = new Vue({
             temp.update_values(
                 [{ values: newData }],
             );
-            app.bpm = Math.round(random(app.bpm - 1, app.bpm + 2));
+            app.bpm = Math.round(random(app.bpm - 1, app.bpm + 1));
             if (app.bpm > 108) app.bpm = 108
             newData = bpm.data.datasets[0].values;
             newData.splice(0, 1)
