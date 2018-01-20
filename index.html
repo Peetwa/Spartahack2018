@@ -7,26 +7,33 @@
     <title>MedAural</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="icons/flaticon.css">
     <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <!-- Link to your stylesheet here -->
     <script src="vue.js"></script>
     <script src="moment.min.js"></script>
     <link rel="stylesheet" href="aj.min.css">
+    <script>
+        var map = {
+            clamp: "flaticon-clamp-1",
+            spreader: "flaticon-clamp",
+            towel: "flaticon-wipes",
+            scissors: "flaticon-scissors",
+            scalpel: "flaticon-scalpel"
+        }
+    </script>
 </head>
 
 <body class="bg-white">
     <div class="" id="app">
         <div class="row cf">
             <div class="six columns bg-blue white p4 min-vh-100">
-                <h3 class="mb4"><b>Arham Jain</b></h3>
+                <h3 class="mb4 tc"><b>Arham Jain</b></h3>
                 <div class="row cf mb0">
                     <div class="six columns">
-                        <h5>DOB: 11/25/2000</h5>
-                        <h5>Allergies</h5>
-                        <ul>
-                            <li>None</li>
-                        </ul>
+                        <h5>DOB: <b>11/25/2000</b></h5>
+                        <h5>Allergies: None</h5>
                     </div>
                     <div class="six columns">
                         <h5>Surgeon: <b>Dr. Shah</b></h5>
@@ -41,11 +48,11 @@
                             <div id="bpm"></div>
                         </div>
                     </div>
-                    <div class="six columns">
-                        <div class="ba br3 bw2 p1 tc bg-white blue">
-                            <h3>Blood Pressure</h3>
-                            <h5><b class="tracked">120/75 </b>mmHg</h5>
-                            <div id="pressure"></div>
+                    <div class="six columns mv1">
+                        <div class="ba br3 bw2 p1 tc bg-white">
+                            <h4 class="mb1 green">Oxygen</h4>
+                            <h5 class="m0 green"><b>{{oxygen}} </b>%</h5>
+                            <div id="oxygen"></div>
                         </div>
                     </div>
                 </div>
@@ -58,30 +65,29 @@
                         </div>
                     </div>
                     <div class="six columns mv1">
-                        <div class="ba br3 bw2 p1 tc bg-white">
-                            <h4 class="mb1 green">Oxygen</h4>
-                            <h5 class="m0 green"><b>{{oxygen}} </b>%</h5>
-                            <div id="oxygen"></div>
+                        <div class="ba br3 bw2 p1 tc bg-white blue">
+                            <h4>Blood Pressure</h4>
+                            <h5><b class="tracked">120/75 </b>mmHg</h5>
+                            <div id="pressure"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="row cf mt3">
-                    <div class="six columns b">
-                        <h4 class="b tracked mb1 ttu">Start Time</h4>
-                        <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
-                    </div>
-                    <div class="six columns b">
-                        <h4 class="b tracked mb1 ttu">Elapsed</h4>
-                        <div class="f6">{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes</div>
+                        <div class="tc mt2">
+                            <h4 class="b tracked mb1 ttu">Start Time</h4>
+                            <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
+                            <br>
+                            <h4 class="b tracked mb1 ttu">Elapsed</h4>
+                            <div class="f6">{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="six columns p4">
-                <h3 class="b mb4">Record</h3>
+                <h3 class="b mb4">Record</h3> <p class="f5">
+                    <span class="white-3">gray</span> means used, and <span class="red">red</span> means still in the body
+                </p>
                 <br>
                 <div class="f5">
-                    <div v-for="item in currentIn" class="dib mr3 bg-yellow white p1">{{item}} </div>
-                    <div v-for="item in out" class="dib mr3">{{item}} </div>
+                    <div v-for="item in currentIn" :class="'f1 dib red ' + map[item.toLowerCase()]"></div>
+                    <div v-for="item in out" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>
                 </div>
             </div>
         </div>
@@ -189,14 +195,15 @@ var app = new Vue({
             );
         }, 2000);
     },
-    data: { in: ["Scalpel", "Scalpel", "Something"],
-        out: ["Scalpel"],
+    data: { in: ["Scalpel", "Scalpel", "Clamp", "Clamp", "Towel","Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Spreader"],
+        out: ["Scalpel", "Towel", "Spreader"],
         diff: diff,
         temp: 98.6,
         oxygen: 98,
         bpm: 75,
         start: moment(),
-        moment: moment
+        moment: moment,
+        map: map
     },
     computed: {
         fixedIn: function() {
