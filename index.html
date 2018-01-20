@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
     <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     <!-- Link to your stylesheet here -->
     <script src="vue.js"></script>
     <script src="moment.min.js"></script>
@@ -17,7 +18,7 @@
 <body class="bg-white">
     <div class="" id="app">
         <div class="row cf">
-            <div class="six columns bg-blue white p4 min-vh-100">
+            <div class="six columns bg-blue white p4">
                 <h3 class="mb4">Patient: <b>Arham Jain</b></h3>
                 <div class="row cf mb0">
                     <div class="six columns">
@@ -57,18 +58,18 @@
                         </div>
                     </div>
                     <div class="six columns mv1">
-                        <div class="ba br3 bw2 p1 tc bg-white blue">
-                            <h4 class="mb1">Oxygen</h4>
-                            <h5 class="m0"><b>{{oxygen}} </b>%</h5>
+                        <div class="ba br3 bw2 p1 tc bg-white">
+                            <h4 class="mb1 green">Oxygen</h4>
+                            <h5 class="m0 green"><b>{{oxygen}} </b>%</h5>
                             <div id="oxygen"></div>
                         </div>
                     </div>
                 </div>
                 <div class="row cf mt1">
-                    <div class="six columns mv1 b">
+                    <div class="six columns b">
                         <h3>Start Time</h3>{{start.format('MMMM Do YYYY, h:mm')}}
                     </div>
-                    <div class="six columns mv1 b">
+                    <div class="six columns b">
                         <h3>Elapsed</h3>{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes
                     </div>
                 </div>
@@ -99,6 +100,8 @@
     </div>
 </body>
 <script>
+var socket = io();
+
 function diff(a1, a2) {
     a2c = JSON.parse(JSON.stringify(a2))
     for (var i = a1.length - 1; i >= 0; i--) {
@@ -152,7 +155,7 @@ var app = new Vue({
             },
             type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
             height: 100,
-            colors: ['#2f97de'],
+            colors: ['#1cce6c'],
         });
         var bpm = new Chart({
             parent: "#bpm", // or a DOM element
@@ -165,7 +168,7 @@ var app = new Vue({
             },
             type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
             height: 100,
-            colors: ['#2f97de'],
+            colors: ['#e84c36'],
         });
         window.setInterval(function() {
             app.oxygen = Math.round(10 * random(app.oxygen - .2, app.oxygen + .2)) / 10;
