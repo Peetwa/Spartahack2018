@@ -133,7 +133,6 @@ Array.prototype.remove = function(item) {
 var app = new Vue({
     el: '#app',
     mounted: function() {
-<<<<<<< HEAD
         var self = this;
         this.$http.get('/user/Peter').then(function(res) {
             self.user = res.body.user;
@@ -275,7 +274,6 @@ var app = new Vue({
                 [{ values: newData }],
             );
         }, 2000);
->>>>>>> parent of 40c82db... wip frontend viewer
     },
     data: { in: ["Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Spreader"],
         out: ["Scalpel", "Towel", "Spreader"],
