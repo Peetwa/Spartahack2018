@@ -26,7 +26,7 @@ module.exports = function( router, User ) {
     });
 
     /**
-     * Get all the active tools
+     * Get all the inactive tools
      * @return:
      */
     router.get('/tool/out/', function(req, res){
@@ -60,14 +60,21 @@ module.exports = function( router, User ) {
      * @param: tools to add to the patient
      * @return:
      */
-    router.delete('/tool/', function(req, res){
+    router.post('/tool/delete/', function(req, res){
         const tools = req.query.tools;
         const toolNames = tools.split(",");
-        User.findOneAndUpdate({"firstName": "Peter"}, {$pullAll : {outTools: toolNames}}, {new: true}, function(err, user){
+        User.findOneAndUpdate({"firstName": "Peter"}, {$pullAll : {inTools: toolNames}}, {new: true}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to remove tool from the active tools`});
             }
-            res.status(200).json({'user': user, message: `Successfully removed ${toolNames} from the active tools`});
+            return res.status(200).json({'user': user, message: `Successfully removed ${user.inTools} from the active tools`});
         });
+        // User.findOneAndUpdate({"firstName": "Peter"}, {$push : {inTools: {$each: toolNames}}}, {new: true}, function(err, user){
+        //     if(err){
+        //         return res.status(500).json({message: `Failed to remove tool from the active tools`});
+        //     }
+        //     return res.status(200).json({'user': user, message: `Successfully removed ${user.inTools} from the active tools`});
+        // });
+
     });
 };
