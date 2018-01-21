@@ -63,10 +63,11 @@ module.exports = function( router, User ) {
      */
     router.post('/bloodpressure/', function(req, res){
         const bloodpressure = req.query.bloodpressure;
+        console.log("here");
         let bloodPressureArr = bloodpressure.split(",");
         const bloodPressure = [];
         for(var i=0; i<bloodPressureArr.length; i++) { bloodPressure[i] = parseInt(bloodPressureArr[i], 10); }
-
+        console.log("bpm: ", JSON.stringify(bloodPressure));
         User.findOneAndUpdate({"firstName": "Peter"}, {$set: {bloodPressure: bloodPressure}}, {new: true}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to add the heart rate measurement`});
@@ -85,7 +86,7 @@ module.exports = function( router, User ) {
                 return res.status(500).json({message: `Failed to grab their heart rate`});
             }
             res.status(200).json({'user': user, message:
-                `Peter currently has a heart rate of ${user.heartRate[user.heartRate.length - 1]} beats per minute.`});
+                `Peter has a blood pressure of ${user.bloodPressure[0]} over ${user.bloodPressure[1]}`});
         });
     });
 
@@ -107,7 +108,7 @@ module.exports = function( router, User ) {
      * Get the patients temperature
      * @return:
      */
-    router.get('/bloodpressure/', function(req, res){
+    router.get('/temperature/', function(req, res){
         User.findOne({"firstName": "Peter"}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to grab their temperature`});
