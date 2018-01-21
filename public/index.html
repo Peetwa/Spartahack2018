@@ -129,7 +129,7 @@ var app = new Vue({
                     labels: ["-5", "-4", "-3", "-2", "-1", "0"],
                     datasets: [{
                         title: "Temperature",
-                        values: [this.temp, this.temp, this.temp, this.temp, this.temp, this.temp]
+                        values: [self.temp, self.temp, self.temp, self.temp, self.temp, self.temp]
                     }]
                 },
                 type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
@@ -143,7 +143,7 @@ var app = new Vue({
                     labels: ["-5", "-4", "-3", "-2", "-1", "0"],
                     datasets: [{
                         title: "Oxygen",
-                        values: [this.oxygen, this.oxygen, this.oxygen, this.oxygen, this.oxygen, this.oxygen]
+                        values: [self.oxygen, self.oxygen, self.oxygen, self.oxygen, self.oxygen, self.oxygen]
                     }]
                 },
                 type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
@@ -156,7 +156,7 @@ var app = new Vue({
                     labels: ["-5", "-4", "-3", "-2", "-1", "0"],
                     datasets: [{
                         title: "Heart Rate",
-                        values: [this.bpm, this.bpm, this.bpm, this.bpm, this.bpm, this.bpm]
+                        values: [self.bpm, self.bpm, self.bpm, self.bpm, self.bpm, self.bpm]
                     }]
                 },
                 type: 'line', // or 'line', 'scatter', 'pie', 'percentage'
