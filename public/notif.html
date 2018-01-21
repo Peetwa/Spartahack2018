@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="icons/flaticon.css">
     <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="./push.min.js"></script>
+    <script src="push.min.js"></script>
     <!-- Link to your stylesheet here -->
-    <script src="./vue.js"></script>
-    <script src="./moment.min.js"></script>
+    <script src="vue.js"></script>
+    <script src="moment.min.js"></script>
     <link rel="stylesheet" href="aj.min.css">
     <script>
     var map = {
@@ -23,85 +23,24 @@
         scissors: "flaticon-scissors",
         scalpel: "flaticon-scalpel"
     }
+    Push.create("Nurse Alert!", {
+        body: "Room 141 needs a MESSAGE",
+        timeout: 4000,
+        onClick: function() {
+            window.focus();
+            this.close();
+        }
+    });
     </script>
 </head>
 
 <body class="bg-white">
     <div class="" id="app">
-        <div class="row cf">
-            <div class="six columns bg-blue white p4 min-vh-100">
-                <h3 class="mb4 tc ttu tracked"><b>Arham Jain</b></h3>
-                <div class="row cf mb0">
-                    <div class="six columns">
-                        <h5>DOB: <b>11/25/2000</b></h5>
-                        <h5>Allergies: <b>Penicillin, Cyclene, Cold Medicine, Grass </b></h5>
-                    </div>
-                    <div class="six columns">
-                        <h5>Surgeon: <b>Dr. Shah</b></h5>
-                        <h5>Procedure: <b>Appendectomy</b></h5>
-                    </div>
-                </div>
-                <div class="row cf">
-                    <div class="six columns">
-                        <div class="ba br3 bw2 p1 tc bg-white">
-                            <h4 class="mb1 red">Heart Rate</h4>
-                            <h5 class="m0 red"><b>{{bpm}} </b>bpm</h5>
-                            <div id="bpm"></div>
-                        </div>
-                    </div>
-                    <div class="six columns mv1">
-                        <div class="ba br3 bw2 p1 tc bg-white">
-                            <h4 class="mb1 green">Oxygen</h4>
-                            <h5 class="m0 green"><b>{{oxygen}} </b>%</h5>
-                            <div id="oxygen"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row cf mt2">
-                    <div class="six columns mv1">
-                        <div class="ba br3 bw2 p1 tc bg-white blue">
-                            <h4 class="mb1">Temperature</h4>
-                            <h5 class="m0"><b>{{temp}} </b>F</h5>
-                            <div id="temp"></div>
-                        </div>
-                    </div>
-                    <div class="six columns mv1">
-                        <div class="ba br3 bw2 p1 tc bg-white blue">
-                            <h4>Blood Pressure</h4>
-                            <h5><b class="tracked">120/75 </b>mmHg</h5>
-                            <div id="pressure"></div>
-                        </div>
-                        <div class="tc mt2">
-                            <h4 class="b tracked mb1 ttu">Start Time</h4>
-                            <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
-                            <br>
-                            <h4 class="b tracked mb1 ttu">Elapsed</h4>
-                            <div class="f6">{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="six columns p4">
-                <h3 class="b mb4 tc ttu tracked">Instruments <span class="red">active</span> and <span class="white-3">inactive</span></h3>
-                <p class="f5">
-                </p>
-                <br>
-                <div class="f5">
-                    <div v-for="item in currentIn" :class="'f1 dib red ' + map[item.toLowerCase()]"></div>
-                    <div v-for="item in out" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>
-                </div>
-            </div>
-        </div>
+        <h1>Announcements</h1>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    var sock = io();
-    sock.on('connection', function(socket) {
-        console.log("hey")
-        socket.on('chat message', function(msg) {
-            console.log('message: ' + msg);
-        });
-    });
+    var socket = io();
     </script>
 </body>
 <script>
