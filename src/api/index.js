@@ -8,16 +8,15 @@
  * Purpose:
  */
 'use strict';
+
 let express = require( "express" );
+
+let router = express.Router();
 const User = require('../models/user.js');
 
+require( "./tools" )( router, User );
+require( "./user" )( router, User );
 
-function router(io){
-    let router_running = express.Router();
-    require( "./tools" )( router_running, User, io );
-    require( "./user" )( router_running, User );
-    require( "./procedure" )( router_running, User );
 
-}
 
 module.exports = router;

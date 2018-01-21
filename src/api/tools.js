@@ -9,7 +9,7 @@
  */
 'use strict';
 
-module.exports = function( router, User, io ) {
+module.exports = function( router, User ) {
 
 
     /**
@@ -17,11 +17,11 @@ module.exports = function( router, User, io ) {
      * @return:
      */
     router.get('/tool/in/', function(req, res){
-        User.findOne({"firstName": "Peter"}, {"activeTools": true},  function( err, user){
+        User.findOne({"firstName": "Peter"}, {"inTools": true},  function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to grab the activate tools`});
             }
-            res.status(200).json({'user': user.activeTools, message: `${user.activeTools} are active`});
+            res.status(200).json({'user': user.inTools, message: `${user.inTools} are active`});
         });
     });
 
@@ -30,11 +30,11 @@ module.exports = function( router, User, io ) {
      * @return:
      */
     router.get('/tool/out/', function(req, res){
-        User.findOne({"firstName": "Peter"}, {"inactiveTools": true},  function( err, user){
+        User.findOne({"firstName": "Peter"}, {"outTools": true},  function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to grab the inactive tools`});
             }
-            res.status(200).json({'user': user.inactiveTools, message: `${user.inactiveTools} are inactive`});
+            res.status(200).json({'user': user.outTools, message: `${user.outTools} are inactive`});
         });
     });
 
@@ -47,12 +47,11 @@ module.exports = function( router, User, io ) {
     router.post('/tool/', function(req, res){
         const tools = req.query.tools;
         const toolNames = tools.split(",");
-        User.findOneAndUpdate({"firstName": "Peter"}, {$push : {activeTools: {$each: toolNames}}}, {new: true}, function( err, user){
+        User.findOneAndUpdate({"firstName": "Peter"}, {$push : {inTools: {$each: toolNames}}}, {new: true}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to add tool to the activated tools`});
             }
-            io.emit("activeTools", JSON.stringify(user.activeTools));
-            return res.status(200).json({'user': user, message: `Successfully added ${toolNames} to the activated tools`});
+            res.status(200).json({'user': user, message: `Successfully added ${toolNames} to the activated tools`});
         });
     });
 
@@ -64,7 +63,7 @@ module.exports = function( router, User, io ) {
     router.delete('/tool/', function(req, res){
         const tools = req.query.tools;
         const toolNames = tools.split(",");
-        User.findOneAndUpdate({"firstName": "Peter"}, {$pullAll : {inactiveTools: toolNames}}, {new: true}, function( err, user){
+        User.findOneAndUpdate({"firstName": "Peter"}, {$pullAll : {outTools: toolNames}}, {new: true}, function(err, user){
             if(err){
                 return res.status(500).json({message: `Failed to remove tool from the active tools`});
             }
