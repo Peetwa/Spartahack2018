@@ -21,6 +21,7 @@ let io = require('socket.io')(http);
 require('./database');
 app.use(parser.json());
 app.use('/', router);
+app.use('/', express.static('../public'));
 
 
 const PORT = 3000;
