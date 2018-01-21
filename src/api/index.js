@@ -16,7 +16,7 @@ const User = require('../models/user.js');
 
 require( "./tools" )( router, User );
 require( "./user" )( router, User );
-
-
+require( "./procedure" )( router, User );
+require( "./allergies" )( router, User );
 
 module.exports = router;
