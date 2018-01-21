@@ -77,10 +77,10 @@
                         </div>
                         <div class="tc mt3">
                             <h4 class="b tracked mb1 ttu">Start Time</h4>
-                            <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
+                            <div class="f6">{{moment(user.startTime).format('MMMM Do YYYY, h:mm')}}</div>
                             <br>
                             <h4 class="b tracked mb1 ttu">Elapsed</h4>
-                            <div class="f6">{{parseInt(moment.duration(moment().diff(start)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(start)).asMinutes())}} minutes</div>
+                            <div class="f6">{{parseInt(moment.duration(moment().diff(user.startTime)).asHours())}} hours and {{parseInt(moment.duration(moment().diff(user.startTime)).asMinutes())}} minutes</div>
                         </div>
                     </div>
                 </div>
