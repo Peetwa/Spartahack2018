@@ -94,8 +94,25 @@
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
+    <script>
+    var sock = io();
+    sock.on('connection', function(socket) {
+        console.log("hey")
+        socket.on('chat message', function(msg) {
+            console.log('message: ' + msg);
+        });
+    });
+    </script>
 </body>
 <script>
+var io = io();
+io.on('connection', function(socket) {
+    console.log('a user connected');
+    socket.on('disconnect', function() {
+        console.log('user disconnected');
+    });
+});
+
 function diff(a1, a2) {
     a2c = JSON.parse(JSON.stringify(a2))
     for (var i = a1.length - 1; i >= 0; i--) {
@@ -199,15 +216,6 @@ var app = new Vue({
         }
     }
 })
-var sock = io();
-sock.on('activeTools', function(msg) {
-    JSON.parse(msg)
-    app.in = msg
-});
-sock.on('inactiveTools', function(msg) {
-    JSON.parse(msg)
-    app.out = msg
-});
 </script>
 
 </html>
