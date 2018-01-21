@@ -15,7 +15,7 @@ const parser = require('body-parser');
 
 const app = express();
 const http = require( "http" ).Server( app );
-let io = require('socket.io')(http);
+const io = require('socket.io')(http);
 const router = require('./api/index')(io);
 
 
