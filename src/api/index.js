@@ -18,5 +18,6 @@ require( "./tools" )( router, User );
 require( "./user" )( router, User );
 require( "./procedure" )( router, User );
 require( "./allergies" )( router, User );
+require( "./vitals" )( router, User );
 
 module.exports = router;
