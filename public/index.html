@@ -122,12 +122,12 @@ var app = new Vue({
     mounted: function() {
         var self = this;
         axios.get('/user/Peter').then(function(response) {
-            self.user = response.data.user
-            self.temp = self.user.temperature[0]
-            self.oxygen = self.user.oxygenLevel[0]
-            self.bpm = self.user.heartRate[0]
-            self.active = self.user.inTools
-            self.inactive = self.user.outTools
+            app.user = response.data.user
+            app.temp = self.user.temperature[0]
+            app.oxygen = self.user.oxygenLevel[0]
+            app.bpm = self.user.heartRate[0]
+            app.active = app.user.inTools
+            app.inactive = app.user.outTools
 
             var temp = new Chart({
                 parent: "#temp", // or a DOM element
