@@ -10,10 +10,10 @@
     <link rel="stylesheet" href="icons/flaticon.css">
     <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="push.min.js"></script>
+    <script src="./push.min.js"></script>
     <!-- Link to your stylesheet here -->
-    <script src="vue.js"></script>
-    <script src="moment.min.js"></script>
+    <script src="./vue.js"></script>
+    <script src="./moment.min.js"></script>
     <link rel="stylesheet" href="aj.min.css">
     <script>
     var map = {
@@ -84,7 +84,6 @@
             <div class="six columns p4">
                 <h3 class="b mb4 tc ttu tracked">Instruments <span class="red">active</span> and <span class="white-3">inactive</span></h3>
                 <p class="f5">
-                    
                 </p>
                 <br>
                 <div class="f5">
@@ -96,7 +95,13 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-    var socket = io();
+    var sock = io();
+    sock.on('connection', function(socket) {
+        console.log("hey")
+        socket.on('chat message', function(msg) {
+            console.log('message: ' + msg);
+        });
+    });
     </script>
 </body>
 <script>
