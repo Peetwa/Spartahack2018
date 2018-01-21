@@ -86,13 +86,13 @@
                 </div>
             </div>
             <div class="six columns p4">
-                <h3 class="b mb4 tc ttu tracked">Instruments <span class="red">active</span> and <span class="white-3">inactive</span></h3>
+                <h3 class="b mb4 tc ttu tracked"><span class="red">active</span> Instruments</h3>
                 <p class="f5">
                 </p>
                 <br>
                 <div class="f5">
                     <div v-for="item in active" :class="'f1 dib red ' + map[item.toLowerCase()]"></div>
-                    <div v-for="item in inactive" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>
+                    <!--<div v-for="item in inactive" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>-->
                 </div>
             </div>
         </div>
