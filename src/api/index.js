@@ -17,7 +17,7 @@ function router(io){
     require( "./tools" )( router_running, User, io );
     require( "./user" )( router_running, User );
     require( "./procedure" )( router_running, User );
-    return router;
+
 }
 
 module.exports = router;
