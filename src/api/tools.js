@@ -11,20 +11,63 @@
 
 module.exports = function( router, User ) {
 
+
     /**
-     * Add a tool to the activated list
-     * @param:
-     * @param:
+     * Get all the active tools
      * @return:
      */
-    router.post('/tool/:tool', function(req, res){
-        const toolName = req.params.tool;
-        User.insert({"firstName": "Peter"}, {$push : {inTools: toolName}}, {new: true}, function(err, user){
+    router.get('/tool/in/', function(req, res){
+        User.findOne({"firstName": "Peter"}, {"inTools": true},  function(err, user){
             if(err){
-                return res.status(500).json({message: `Failed to add tool to the IN TOOLS`});
+                return res.status(500).json({message: `Failed to grab the activate tools`});
             }
-            res.status(200).json({'user': user, message: `Successfully added ${toolName} to the IN TOOLS`});
+            res.status(200).json({'user': user.inTools, message: `${user.inTools} are active`});
         });
     });
 
+    /**
+     * Get all the active tools
+     * @return:
+     */
+    router.get('/tool/out/', function(req, res){
+        User.findOne({"firstName": "Peter"}, {"outTools": true},  function(err, user){
+            if(err){
+                return res.status(500).json({message: `Failed to grab the inactive tools`});
+            }
+            res.status(200).json({'user': user.outTools, message: `${user.outTools} are inactive`});
+        });
+    });
+
+
+    /**
+     * Add the tools to the activated list
+     * @param: tools to add to the patient
+     * @return:
+     */
+    router.post('/tool/', function(req, res){
+        const tools = req.query.tools;
+        const toolNames = tools.split(",");
+        User.findOneAndUpdate({"firstName": "Peter"}, {$push : {inTools: {$each: toolNames}}}, {new: true}, function(err, user){
+            if(err){
+                return res.status(500).json({message: `Failed to add tool to the activated tools`});
+            }
+            res.status(200).json({'user': user, message: `Successfully added ${toolNames} to the activated tools`});
+        });
+    });
+
+    /**
+     * Remove the tools from the activated list
+     * @param: tools to add to the patient
+     * @return:
+     */
+    router.delete('/tool/', function(req, res){
+        const tools = req.query.tools;
+        const toolNames = tools.split(",");
+        User.findOneAndUpdate({"firstName": "Peter"}, {$pullAll : {outTools: toolNames}}, {new: true}, function(err, user){
+            if(err){
+                return res.status(500).json({message: `Failed to remove tool from the active tools`});
+            }
+            res.status(200).json({'user': user, message: `Successfully removed ${toolNames} from the active tools`});
+        });
+    });
 };
