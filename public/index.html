@@ -22,6 +22,11 @@
         scissors: "flaticon-scissors",
         scalpel: "flaticon-scalpel"
     }
+    var fitbit = []
+    count = 0
+    axios.get('fitbit.json').then(function(response) {
+        fitbit = response.data
+    })
     </script>
 </head>
 
@@ -32,7 +37,7 @@
                 <h3 class="mb4 tc ttu tracked"><b>{{user.formattedName}}</b></h3>
                 <div class="row cf mb0">
                     <div class="six columns">
-                        <h5>DOB: <b>11/25/2000</b></h5>
+                        <h5>DOB: <b>{{moment(user.dateOfBirth).format('MM/DD/YYYY')}}</b></h5>
                         <h5>Allergies: <b v-for="allergy in user.allergies">{{allergy}}</b></h5>
                     </div>
                     <div class="six columns">
@@ -181,7 +186,7 @@ var app = new Vue({
                 temp.update_values(
                     [{ values: newData }],
                 );
-                app.bpm = Math.round(random(app.bpm - 1, app.bpm + 1));
+                app.bpm = fitbit[++count].value
                 if (app.bpm > 108) app.bpm = 108
                 newData = bpm.data.datasets[0].values;
                 newData.splice(0, 1)
