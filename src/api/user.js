@@ -12,10 +12,8 @@
 module.exports = function( router, User ) {
 
     /**
-     * Add a tool to the activated list
-     * @param:
-     * @param:
-     * @return:
+     * Create a patient
+     * @return: a patient
      */
     router.post('/user/', function(req, res){
         const user = req.body;
@@ -24,6 +22,20 @@ module.exports = function( router, User ) {
                 return res.status(500).json({message: `Failed to create the patient`});
             }
             return res.status(200).json({'user': user, message: `Successfully created the patient`});
+        });
+    });
+
+    /**
+     * Find a Patient/User
+     * @return:
+     */
+    router.get('/user/:name', function(req, res){
+        const firstName = req.params.name;
+        User.findOne({"firstName": firstName}, function(err, user){
+            if(err){
+                return res.status(500).json({message: `Failed to find patient ${firstName}`});
+            }
+            return res.status(200).json({'user': user, message: `Successfully found the patient ${firstName}`});
         });
     });
 };
