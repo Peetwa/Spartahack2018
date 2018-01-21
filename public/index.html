@@ -9,8 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="icons/flaticon.css">
     <script src="https://unpkg.com/frappe-charts@0.0.8/dist/frappe-charts.min.iife.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="./push.min.js"></script>
+    <script src="vue-resource.min.js"></script>
     <!-- Link to your stylesheet here -->
     <script src="./vue.js"></script>
     <script src="./moment.min.js"></script>
@@ -134,11 +133,11 @@ var app = new Vue({
     el: '#app',
     mounted: function() {
         var self = this;
-        this.$http.get('/user/Peter').then(function(res) {
-            self.user = res.body.user;
-            self.temp = self.user.temperature[0]
-            self.oxygen = self.user.oxygenLevel[0]
-            self.bpm = self.user.heartRate[0]
+       //ue.http.get('/user/Peter').then(function(res) {
+            //self.user = res.body.user;
+            //self.temp = self.user.temperature[0]
+            //self.oxygen = self.user.oxygenLevel[0]
+            //self.bpm = self.user.heartRate[0]
 
             var temp = new Chart({
                 parent: "#temp", // or a DOM element
@@ -206,8 +205,7 @@ var app = new Vue({
                     [{ values: newData }],
                 );
             }, 2000);
-        })
-=======
+      //  })
         var temp = new Chart({
             parent: "#temp", // or a DOM element
             data: {
