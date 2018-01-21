@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema({
     oxygenLevel: [Number],
     temperature: [Number],
     surgeryType: String,
-    inTools: [String],
-    outTools: [String]
+    activeTools: [String],
+    inactiveTools: [String]
 });
 
 const model = mongoose.model('User', userSchema);

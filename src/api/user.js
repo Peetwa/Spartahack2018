@@ -25,6 +25,8 @@ module.exports = function( router, User ) {
         });
     });
 
+    // SetupSurgey: procedureName, Dr Name(lastName's arr), patient Name, Birth date
+
     /**
      * Find a Patient/User
      * @return:
