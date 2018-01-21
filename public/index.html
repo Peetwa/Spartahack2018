@@ -75,7 +75,7 @@
                             <h5><b class="tracked" v-if="user.bloodPressure">{{user.bloodPressure[0]}}/{{user.bloodPressure[1]}}</b> mmHg</h5>
                             <div id="pressure"></div>
                         </div>
-                        <div class="tc mt2">
+                        <div class="tc mt3">
                             <h4 class="b tracked mb1 ttu">Start Time</h4>
                             <div class="f6">{{start.format('MMMM Do YYYY, h:mm')}}</div>
                             <br>
@@ -91,8 +91,8 @@
                 </p>
                 <br>
                 <div class="f5">
-                    <div v-for="item in currentIn" :class="'f1 dib red ' + map[item.toLowerCase()]"></div>
-                    <div v-for="item in out" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>
+                    <div v-for="item in active" :class="'f1 dib red ' + map[item.toLowerCase()]"></div>
+                    <div v-for="item in inactive" :class="'f1 dib white-3 ' + map[item.toLowerCase()]"></div>
                 </div>
             </div>
         </div>
@@ -126,7 +126,8 @@ var app = new Vue({
             self.temp = self.user.temperature[0]
             self.oxygen = self.user.oxygenLevel[0]
             self.bpm = self.user.heartRate[0]
-
+            self.active = self.user.inTools
+            self.inactive = self.user.outTools
 
             var temp = new Chart({
                 parent: "#temp", // or a DOM element
@@ -197,8 +198,8 @@ var app = new Vue({
             }, 2000);
         })
     },
-    data: { in: ["Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Scalpel", "Scalpel", "Clamp", "Clamp", "Towel", "Spreader"],
-        out: ["Scalpel", "Towel", "Spreader"],
+    data: { active: [],
+        inactive: [],
         diff: diff,
         temp: 98.6,
         oxygen: 98,
