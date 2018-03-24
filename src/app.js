@@ -24,11 +24,11 @@ app.use('/', router);
 app.use('/', express.static('./public'));
 
 
-const PORT = 3000;
+const PORT = 27017;
 
-io.on('connection', function(socket){
-    console.log('a user connected');
-});
+//io.on('connection', function(socket){
+//    console.log('a user connected');
+//});
 
 http.listen( PORT, function() {
     console.log( `listening on port :${PORT}` );

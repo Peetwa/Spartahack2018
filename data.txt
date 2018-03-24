@@ -1,0 +1,70 @@
+{
+  "allergies": [
+    "Penicillin"
+  ],
+  "heartRate": [
+    88,
+    90,
+    87,
+    94,
+    40
+  ],
+  "bloodPressure": [
+    120,
+    60
+  ],
+  "oxygenLevel": [
+    97
+  ],
+  "temperature": [
+    98.3
+  ],
+  "inTools": [
+    "scapel"
+  ],
+  "outTools": [
+    "towel"
+  ],
+  "formattedName": "Peter Carras",
+  "firstName": "Peter",
+  "lastName": "Carras",
+  "Procedure": "Apendectomy",
+  "Surgeon": "Katja",
+  "surgeryType": "Abdominal",
+  "__v": 0
+}
+{
+  "allergies": [
+    "Penicillin"
+  ],
+  "heartRate": [
+    88,
+    90,
+    87,
+    94,
+    40
+  ],
+  "bloodPressure": [
+    120,
+    60
+  ],
+  "oxygenLevel": [
+    97
+  ],
+  "temperature": [
+    98.3
+  ],
+  "inTools": [
+    "scapel"
+  ],
+  "outTools": [
+    "towel"
+  ],
+  "formattedName": "Peter Carras",
+  "firstName": "Peter",
+  "lastName": "Carras",
+  "Procedure": "Abdominal",
+  "Surgeon": "Katja",
+  "surgeryType": "Abdominal",
+  "__v": 0
+}
