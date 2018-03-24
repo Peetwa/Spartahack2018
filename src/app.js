@@ -16,7 +16,7 @@ const router = require('./api/index');
 
 const app = express();
 const http = require( "http" ).Server( app );
-let io = require('socket.io')(http);
+//let io = require('socket.io')(http);
 
 require('./database');
 app.use(parser.json());
