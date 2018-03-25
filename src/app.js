@@ -24,7 +24,7 @@ app.use('/', router);
 app.use('/', express.static('./public'));
 
 
-const PORT = 57436;
+const PORT = 27017;
 
 io.on('connection', function(socket){
     console.log('a user connected');
